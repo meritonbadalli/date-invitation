@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Date Invitation ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+}
+
+.card {
+    position: relative;
+    z-index: 2;
+    width: 390px;
+    max-width: 92%;
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+    animation: popup 0.5s ease;
+}
+
+@keyframes popup {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.profile {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    box-shadow: 0 8px 25px rgba(255,65,108,0.35);
+}
+
+h1 {
+    color: #222;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #777;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    padding: 13px 22px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.ok {
+    background: #ff416c;
+    color: white;
+    box-shadow: 0 5px 15px rgba(255,65,108,0.3);
+}
+
+.ok:hover {
+    transform: scale(1.05);
+}
+
+.no {
+    background: #eee;
+    color: #555;
+    position: relative;
+}
+
+/* Calendar */
+
+.calendar {
+    display: none;
+}
+
+.calendar h2 {
+    margin-bottom: 8px;
+    color: #222;
+}
+
+.calendar p {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.month button {
+    background: #f3f3f3;
+    padding: 8px 13px;
+}
+
+.month strong {
+    font-size: 17px;
+}
+
+.weekdays,
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.weekdays div {
+    font-size: 11px;
+    color: #999;
+    padding: 5px 0;
+}
+
+.days button {
+    padding: 9px 0;
+    background: #f5f5f5;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.days button:hover {
+    background: #ffd6df;
+}
+
+.days button.selected {
+    background: #ff416c;
+    color: white;
+}
+
+.days button.disabled {
+    color: #bbb;
+    background: #fafafa;
+    cursor: not-allowed;
+}
+
+.times {
+    margin-top: 20px;
+    display: none;
+}
+
+.times h3 {
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.time-options {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.time-options button {
+    background: #f5f5f5;
+    padding: 10px 16px;
+    font-size: 13px;
+}
+
+.time-options button:hover,
+.time-options button.selected {
+    background: #ff416c;
+    color: white;
+}
+
+.confirm {
+    margin-top: 20px;
+    width: 100%;
+    background: #222;
+    color: white;
+    display: none;
+}
+
+.confirm:hover {
+    background: #333;
+}
+
+/* Success */
+
+.success {
+    display: none;
+}
+
+.heart {
+    font-size: 70px;
+    animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.success h1 {
+    margin-top: 10px;
+}
+
+.confirmation {
+    background: #fff1f4;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 18px;
+    color: #444;
+    line-height: 1.6;
+}
+
+#confetti {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="card">
+
+    <!-- FIRST SCREEN -->
+    <div id="invite">
+
+        <div class="profile">❤️</div>
+
+        <h1>You have a date invitation!</h1>
+
+        <p class="subtitle">
+            Someone thinks you two should spend some time together...
+            <br><br>
+            Would you like to go on a date?
+        </p>
+
+        <div class="buttons">
+
+            <button class="ok" onclick="openCalendar()">
+                OK ❤️
+            </button>
+
+            <button class="no" id="noButton">
+                Maybe later
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- CALENDAR -->
+    <div class="calendar" id="calendar">
+
+        <h2>Pick a date 📅</h2>
+
+        <p>Choose the day you'd like to go on your date.</p>
+
+        <div class="month">
+
+            <button onclick="previousMonth()">‹</button>
+
+            <strong id="monthName"></strong>
+
+            <button onclick="nextMonth()">›</button>
+
+        </div>
+
+        <div class="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+
+        <div class="days" id="days"></div>
+
+
+        <div class="times" id="times">
+
+            <h3>Select a time ⏰</h3>
+
+            <div class="time-options">
+
+                <button onclick="selectTime(this)">18:00</button>
+                <button onclick="selectTime(this)">19:00</button>
+                <button onclick="selectTime(this)">20:00</button>
+                <button onclick="selectTime(this)">21:00</button>
+
+            </div>
+
+        </div>
+
+        <button class="confirm" id="confirmButton" onclick="confirmDate()">
+            Confirm Date ❤️
+        </button>
+
+    </div>
+
+
+    <!-- SUCCESS -->
+    <div class="success" id="success">
+
+        <div class="heart">❤️</div>
+
+        <h1>Date confirmed!</h1>
+
+        <p class="subtitle">
+            It's officially a date. 😉
+        </p>
+
+        <div class="confirmation">
+
+            📅 <strong id="finalDate"></strong>
+            <br>
+            ⏰ <strong id="finalTime"></strong>
+
+        </div>
+
+        <p style="margin-top:18px;color:#888;font-size:13px;">
+            See you there ❤️
+        </p>
+
+    </div>
+
+</div>
+
+<canvas id="confetti"></canvas>
+
+
+<script>
+
+let currentDate = new Date();
+
+let selectedDate = null;
+let selectedTime = null;
+
+
+/* -------------------------
+   RUN AWAY BUTTON
+------------------------- */
+
+const noButton = document.getElementById("noButton");
+
+function moveButton() {
+
+    const maxX = window.innerWidth - 150;
+    const maxY = window.innerHeight - 80;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noButton.style.position = "fixed";
+    noButton.style.left = x + "px";
+    noButton.style.top = y + "px";
+}
+
+noButton.addEventListener("mouseenter", moveButton);
+
+noButton.addEventListener("touchstart", moveButton);
+
+
+/* -------------------------
+   OPEN CALENDAR
+------------------------- */
+
+function openCalendar() {
+
+    document.getElementById("invite").style.display = "none";
+
+    document.getElementById("calendar").style.display = "block";
+
+    renderCalendar();
+}
+
+
+/* -------------------------
+   CALENDAR
+------------------------- */
+
+function renderCalendar() {
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+
+    document.getElementById("monthName").innerText =
+        monthNames[month] + " " + year;
+
+    const daysContainer =
+        document.getElementById("days");
+
+    daysContainer.innerHTML = "";
+
+    const firstDay =
+        new Date(year, month, 1).getDay();
+
+    const daysInMonth =
+        new Date(year, month + 1, 0).getDate();
+
+    const today = new Date();
+
+    for (let i = 0; i < firstDay; i++) {
+
+        const empty = document.createElement("div");
+
+        daysContainer.appendChild(empty);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+
+        const button =
+            document.createElement("button");
+
+        button.innerText = day;
+
+        const date =
+            new Date(year, month, day);
+
+        if (date < new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+        )) {
+
+            button.classList.add("disabled");
+
+            button.disabled = true;
+
+        } else {
+
+            button.onclick = function() {
+
+                document
+                    .querySelectorAll(".days button")
+                    .forEach(b =>
+                        b.classList.remove("selected")
+                    );
+
+                button.classList.add("selected");
+
+                selectedDate = date;
+
+                document.getElementById("times")
+                    .style.display = "block";
+
+                document.getElementById("confirmButton")
+                    .style.display = "none";
+
+                selectedTime = null;
+
+                document
+                    .querySelectorAll(".time-options button")
+                    .forEach(b =>
+                        b.classList.remove("selected")
+                    );
+            };
+        }
+
+        daysContainer.appendChild(button);
+    }
+}
+
+
+function previousMonth() {
+
+    currentDate.setMonth(
+        currentDate.getMonth() - 1
+    );
+
+    renderCalendar();
+}
+
+
+function nextMonth() {
+
+    currentDate.setMonth(
+        currentDate.getMonth() + 1
+    );
+
+    renderCalendar();
+}
+
+
+/* -------------------------
+   TIME
+------------------------- */
+
+function selectTime(button) {
+
+    document
+        .querySelectorAll(".time-options button")
+        .forEach(b =>
+            b.classList.remove("selected")
+        );
+
+    button.classList.add("selected");
+
+    selectedTime = button.innerText;
+
+    document.getElementById("confirmButton")
+        .style.display = "block";
+}
+
+
+/* -------------------------
+   CONFIRM
+------------------------- */
+
+function confirmDate() {
+
+    if (!selectedDate || !selectedTime) {
+        return;
+    }
+
+    const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    };
+
+    document.getElementById("finalDate").innerText =
+        selectedDate.toLocaleDateString(
+            "en-US",
+            options
+        );
+
+    document.getElementById("finalTime").innerText =
+        selectedTime;
+
+    document.getElementById("calendar")
+        .style.display = "none";
+
+    document.getElementById("success")
+        .style.display = "block";
+
+    startConfetti();
+}
+
+
+/* -------------------------
+   CONFETTI
+------------------------- */
+
+const canvas =
+    document.getElementById("confetti");
+
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+
+function resizeCanvas() {
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+function startConfetti() {
+
+    particles = [];
+
+    for (let i = 0; i < 150; i++) {
+
+        particles.push({
+
+            x: Math.random() * canvas.width,
+
+            y: Math.random() * -canvas.height,
+
+            size: Math.random() * 8 + 3,
+
+            speed: Math.random() * 4 + 2,
+
+            rotation: Math.random() * 360,
+
+            rotationSpeed:
+                Math.random() * 10 - 5
+
+        });
+    }
+
+    animateConfetti();
+}
+
+
+function animateConfetti() {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    particles.forEach(p => {
+
+        p.y += p.speed;
+
+        p.rotation += p.rotationSpeed;
+
+        ctx.save();
+
+        ctx.translate(p.x, p.y);
+
+        ctx.rotate(
+            p.rotation * Math.PI / 180
+        );
+
+        ctx.fillStyle =
+            ["#ff416c","#ffcc00","#5c7cfa","#51cf66","#be4bdb"]
+            [Math.floor(Math.random() * 5)];
+
+        ctx.fillRect(
+            -p.size / 2,
+            -p.size / 2,
+            p.size,
+            p.size
+        );
+
+        ctx.restore();
+
+    });
+
+    particles =
+        particles.filter(
+            p => p.y < canvas.height + 20
+        );
+
+    if (particles.length > 0) {
+
+        requestAnimationFrame(
+            animateConfetti
+        );
+    }
+}
+
+</script>
+
+</body>
+</html>
