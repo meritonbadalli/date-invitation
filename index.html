@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,7 @@
 <title>Date Invitation ❤️</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -26,15 +28,17 @@ body {
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.35);
+    background: rgba(0,0,0,0.30);
     backdrop-filter: blur(4px);
 }
 
 .card {
     position: relative;
     z-index: 2;
-    width: 390px;
-    max-width: 92%;
+    width: 410px;
+    max-width: 94%;
+    max-height: 92vh;
+    overflow-y: auto;
     background: white;
     border-radius: 25px;
     padding: 30px;
@@ -44,32 +48,54 @@ body {
 }
 
 @keyframes popup {
+
     from {
         transform: scale(0.7);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;
     }
 }
 
+
+/* PROFILE */
+
 .profile {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     margin: 0 auto 18px;
-    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+
+    background: linear-gradient(
+        135deg,
+        #ff416c,
+        #ff4b2b
+    );
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-size: 48px;
-    box-shadow: 0 8px 25px rgba(255,65,108,0.35);
+
+    box-shadow:
+        0 8px 25px rgba(255,65,108,0.35);
 }
+
+
+/* TEXT */
 
 h1 {
     color: #222;
     font-size: 26px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #222;
     margin-bottom: 10px;
 }
 
@@ -80,26 +106,40 @@ h1 {
     margin-bottom: 25px;
 }
 
+
+/* BUTTONS */
+
 .buttons {
     display: flex;
     gap: 12px;
     justify-content: center;
+    align-items: center;
 }
 
 button {
     border: none;
     cursor: pointer;
+
     padding: 13px 22px;
+
     border-radius: 30px;
+
     font-size: 15px;
     font-weight: bold;
-    transition: 0.2s;
+
+    transition:
+        left 0.18s ease,
+        top 0.18s ease,
+        transform 0.18s ease,
+        background 0.2s ease;
 }
 
 .ok {
     background: #ff416c;
     color: white;
-    box-shadow: 0 5px 15px rgba(255,65,108,0.3);
+
+    box-shadow:
+        0 5px 15px rgba(255,65,108,0.3);
 }
 
 .ok:hover {
@@ -109,60 +149,89 @@ button {
 .no {
     background: #eee;
     color: #555;
-    position: relative;
 }
 
-/* Calendar */
 
-.calendar {
+/* SCREENS */
+
+.screen {
     display: none;
 }
 
-.calendar h2 {
-    margin-bottom: 8px;
-    color: #222;
+.screen.active {
+    display: block;
 }
 
-.calendar p {
-    color: #777;
-    font-size: 14px;
+
+/* PROGRESS */
+
+.progress {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+
     margin-bottom: 20px;
 }
 
-.month {
+.progress span {
+    width: 30px;
+    height: 5px;
+
+    border-radius: 10px;
+
+    background: #eee;
+}
+
+.progress span.active {
+    background: #ff416c;
+}
+
+
+/* CALENDAR */
+
+.calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     margin-bottom: 15px;
 }
 
-.month button {
+.calendar-header button {
     background: #f3f3f3;
     padding: 8px 13px;
 }
 
-.month strong {
+.calendar-header strong {
     font-size: 17px;
 }
 
 .weekdays,
 .days {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
     gap: 5px;
 }
 
 .weekdays div {
     font-size: 11px;
     color: #999;
+
     padding: 5px 0;
 }
 
 .days button {
     padding: 9px 0;
+
     background: #f5f5f5;
+
     border-radius: 10px;
+
     font-size: 13px;
+
     font-weight: normal;
 }
 
@@ -178,64 +247,165 @@ button {
 .days button.disabled {
     color: #bbb;
     background: #fafafa;
+
     cursor: not-allowed;
 }
 
-.times {
+
+/* PLACES */
+
+.places {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+
     margin-top: 20px;
-    display: none;
 }
 
-.times h3 {
-    margin-bottom: 12px;
-    font-size: 16px;
+.place {
+    background: #f7f7f7;
+
+    border: 2px solid transparent;
+
+    border-radius: 15px;
+
+    padding: 15px 8px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        background 0.2s,
+        border 0.2s;
 }
+
+.place:hover {
+    transform: translateY(-2px);
+
+    background: #fff0f3;
+}
+
+.place.selected {
+    border-color: #ff416c;
+
+    background: #fff0f3;
+}
+
+.place .emoji {
+    font-size: 30px;
+
+    display: block;
+
+    margin-bottom: 6px;
+}
+
+.place .name {
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #333;
+}
+
+.place .desc {
+    font-size: 11px;
+
+    color: #999;
+
+    margin-top: 4px;
+}
+
+
+/* TIME */
 
 .time-options {
     display: flex;
+
     gap: 8px;
+
     justify-content: center;
+
     flex-wrap: wrap;
+
+    margin-top: 15px;
 }
 
 .time-options button {
     background: #f5f5f5;
+
     padding: 10px 16px;
+
     font-size: 13px;
 }
 
 .time-options button:hover,
 .time-options button.selected {
     background: #ff416c;
+
     color: white;
 }
 
+
+/* NEXT / CONFIRM */
+
+.next,
 .confirm {
     margin-top: 20px;
+
     width: 100%;
+
     background: #222;
+
     color: white;
-    display: none;
 }
 
+.next:hover,
 .confirm:hover {
     background: #333;
 }
 
-/* Success */
+.next:disabled,
+.confirm:disabled {
+    background: #ccc;
 
-.success {
-    display: none;
+    cursor: not-allowed;
 }
+
+
+/* BACK */
+
+.back {
+    background: transparent;
+
+    color: #999;
+
+    font-size: 12px;
+
+    margin-top: 10px;
+}
+
+
+/* SUCCESS */
 
 .heart {
     font-size: 70px;
-    animation: heartbeat 1s infinite;
+
+    animation:
+        heartbeat 1s infinite;
 }
 
 @keyframes heartbeat {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
 }
 
 .success h1 {
@@ -244,194 +414,776 @@ button {
 
 .confirmation {
     background: #fff1f4;
-    padding: 15px;
+
+    padding: 18px;
+
     border-radius: 15px;
+
     margin-top: 18px;
+
     color: #444;
-    line-height: 1.6;
+
+    line-height: 1.8;
 }
+
+
+/* CONFETTI */
 
 #confetti {
     position: fixed;
+
     inset: 0;
+
     pointer-events: none;
-    z-index: 10;
+
+    z-index: 10000;
 }
+
 </style>
 </head>
+
 
 <body>
 
 <div class="overlay"></div>
 
+
 <div class="card">
 
-    <!-- FIRST SCREEN -->
-    <div id="invite">
 
-        <div class="profile">❤️</div>
+<!-- =========================
+     INVITATION
+========================= -->
 
-        <h1>You have a date invitation by Meriton!</h1>
+<div id="invite" class="screen active">
 
-        <p class="subtitle">
-            Someone thinks you two should spend some time together...
-            <br><br>
-            Would you like to go on a date?
-        </p>
-
-        <div class="buttons">
-
-            <button class="ok" onclick="openCalendar()">
-                OK ❤️
-            </button>
-
-            <button class="no" id="noButton">
-                NO
-            </button>
-
-        </div>
-
+    <div class="profile">
+        ❤️
     </div>
 
 
-    <!-- CALENDAR -->
-    <div class="calendar" id="calendar">
-
-        <h2>Pick a date 📅</h2>
-
-        <p>Choose the day you'd like to go on your date.</p>
-
-        <div class="month">
-
-            <button onclick="previousMonth()">‹</button>
-
-            <strong id="monthName"></strong>
-
-            <button onclick="nextMonth()">›</button>
-
-        </div>
-
-        <div class="weekdays">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-        </div>
-
-        <div class="days" id="days"></div>
+    <h1>
+        You have a date invitation!
+    </h1>
 
 
-        <div class="times" id="times">
+    <p class="subtitle">
 
-            <h3>Select a time ⏰</h3>
+        Someone thinks you two should
+        spend some time together...
 
-            <div class="time-options">
+        <br><br>
 
-                <button onclick="selectTime(this)">18:00</button>
-                <button onclick="selectTime(this)">19:00</button>
-                <button onclick="selectTime(this)">20:00</button>
-                <button onclick="selectTime(this)">21:00</button>
+        Would you like to go on a date?
 
-            </div>
+    </p>
 
-        </div>
 
-        <button class="confirm" id="confirmButton" onclick="confirmDate()">
-            Confirm Date ❤️
+    <div class="buttons">
+
+        <button
+            class="ok"
+            onclick="startDate()">
+
+            OK ❤️
+
         </button>
 
-    </div>
 
+        <button
+            class="no"
+            id="noButton">
 
-    <!-- SUCCESS -->
-    <div class="success" id="success">
+            Maybe later
 
-        <div class="heart">❤️</div>
-
-        <h1>Date confirmed!</h1>
-
-        <p class="subtitle">
-            It's officially a date. 😉
-        </p>
-
-        <div class="confirmation">
-
-            📅 <strong id="finalDate"></strong>
-            <br>
-            ⏰ <strong id="finalTime"></strong>
-
-        </div>
-
-        <p style="margin-top:18px;color:#888;font-size:13px;">
-            See you there ❤️
-        </p>
+        </button>
 
     </div>
 
 </div>
 
+
+
+<!-- =========================
+     DATE
+========================= -->
+
+<div id="dateScreen" class="screen">
+
+
+    <div class="progress">
+
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+    <h2>
+        Pick a date 📅
+    </h2>
+
+
+    <p class="subtitle">
+
+        When would you like to go?
+
+    </p>
+
+
+    <div class="calendar-header">
+
+        <button onclick="previousMonth()">
+            ‹
+        </button>
+
+
+        <strong id="monthName"></strong>
+
+
+        <button onclick="nextMonth()">
+            ›
+        </button>
+
+    </div>
+
+
+    <div class="weekdays">
+
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+
+    </div>
+
+
+    <div
+        class="days"
+        id="days">
+    </div>
+
+
+    <button
+        class="next"
+        id="dateNext"
+        onclick="goToPlace()"
+        disabled>
+
+        Next →
+
+    </button>
+
+</div>
+
+
+
+<!-- =========================
+     PLACE
+========================= -->
+
+<div id="placeScreen" class="screen">
+
+
+    <div class="progress">
+
+        <span class="active"></span>
+        <span class="active"></span>
+        <span></span>
+
+    </div>
+
+
+    <h2>
+        Where should we go? 📍
+    </h2>
+
+
+    <p class="subtitle">
+
+        What sounds good to you?
+
+    </p>
+
+
+    <div class="places">
+
+
+        <div
+            class="place"
+            onclick="selectPlace(this, 'Sushi 🍣')">
+
+            <span class="emoji">
+                🍣
+            </span>
+
+            <span class="name">
+                Sushi
+            </span>
+
+            <div class="desc">
+                Something delicious
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="place"
+            onclick="selectPlace(this, 'Italian 🍝')">
+
+            <span class="emoji">
+                🍝
+            </span>
+
+            <span class="name">
+                Italian
+            </span>
+
+            <div class="desc">
+                Pasta & good vibes
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="place"
+            onclick="selectPlace(this, 'Pizza 🍕')">
+
+            <span class="emoji">
+                🍕
+            </span>
+
+            <span class="name">
+                Pizza
+            </span>
+
+            <div class="desc">
+                Classic choice
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="place"
+            onclick="selectPlace(this, 'Coffee & Dessert ☕')">
+
+            <span class="emoji">
+                ☕
+            </span>
+
+            <span class="name">
+                Coffee & Dessert
+            </span>
+
+            <div class="desc">
+                Something sweet
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="place"
+            onclick="selectPlace(this, 'Cinema 🎬')">
+
+            <span class="emoji">
+                🎬
+            </span>
+
+            <span class="name">
+                Cinema
+            </span>
+
+            <div class="desc">
+                Movie night
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="place"
+            onclick="selectPlace(this, 'Walk 🌳')">
+
+            <span class="emoji">
+                🌳
+            </span>
+
+            <span class="name">
+                Walk
+            </span>
+
+            <div class="desc">
+                Fresh air & talking
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="place"
+            onclick="selectPlace(this, 'Surprise me 😉')">
+
+            <span class="emoji">
+                🎁
+            </span>
+
+            <span class="name">
+                Surprise me
+            </span>
+
+            <div class="desc">
+                You decide 😉
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="place"
+            onclick="selectPlace(this, 'Anything ❤️')">
+
+            <span class="emoji">
+                ❤️
+            </span>
+
+            <span class="name">
+                Anything
+            </span>
+
+            <div class="desc">
+                I'm easy
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <button
+        class="next"
+        id="placeNext"
+        onclick="goToTime()"
+        disabled>
+
+        Next →
+
+    </button>
+
+
+    <button
+        class="back"
+        onclick="showScreen('dateScreen')">
+
+        ← Back
+
+    </button>
+
+</div>
+
+
+
+<!-- =========================
+     TIME
+========================= -->
+
+<div id="timeScreen" class="screen">
+
+
+    <div class="progress">
+
+        <span class="active"></span>
+        <span class="active"></span>
+        <span class="active"></span>
+
+    </div>
+
+
+    <h2>
+        What time? ⏰
+    </h2>
+
+
+    <p class="subtitle">
+
+        Pick a time that works for you.
+
+    </p>
+
+
+    <div class="time-options">
+
+
+        <button onclick="selectTime(this)">
+            18:00
+        </button>
+
+
+        <button onclick="selectTime(this)">
+            19:00
+        </button>
+
+
+        <button onclick="selectTime(this)">
+            20:00
+        </button>
+
+
+        <button onclick="selectTime(this)">
+            21:00
+        </button>
+
+
+    </div>
+
+
+    <button
+        class="confirm"
+        id="confirmButton"
+        onclick="confirmDate()"
+        disabled>
+
+        Confirm Date ❤️
+
+    </button>
+
+
+    <button
+        class="back"
+        onclick="showScreen('placeScreen')">
+
+        ← Back
+
+    </button>
+
+</div>
+
+
+
+<!-- =========================
+     SUCCESS
+========================= -->
+
+<div id="success" class="screen">
+
+
+    <div class="heart">
+        ❤️
+    </div>
+
+
+    <h1>
+        It's a date!
+    </h1>
+
+
+    <p class="subtitle">
+
+        Everything is planned. 😉
+
+    </p>
+
+
+    <div class="confirmation">
+
+        📅
+        <strong id="finalDate"></strong>
+
+        <br>
+
+        📍
+        <strong id="finalPlace"></strong>
+
+        <br>
+
+        ⏰
+        <strong id="finalTime"></strong>
+
+    </div>
+
+
+    <p
+        style="
+        margin-top:18px;
+        color:#888;
+        font-size:13px;
+        ">
+
+        See you there ❤️
+
+    </p>
+
+</div>
+
+
+</div>
+
+
 <canvas id="confetti"></canvas>
+
 
 
 <script>
 
+
+/* =========================
+   VARIABLES
+========================= */
+
 let currentDate = new Date();
 
 let selectedDate = null;
+
+let selectedPlace = null;
+
 let selectedTime = null;
 
 
-/* -------------------------
-   RUN AWAY BUTTON
-------------------------- */
+/* =========================
+   RUN AWAY BUTTON 😈
+========================= */
 
-const noButton = document.getElementById("noButton");
+const noButton =
+    document.getElementById("noButton");
+
+let noClicks = 0;
+
+
+const funnyTexts = [
+
+    "Maybe later",
+
+    "Are you sure? 🥺",
+
+    "Really? 😭",
+
+    "Think again 😏",
+
+    "Come on! ❤️",
+
+    "You can't escape 😂",
+
+    "Just say YES! ❤️"
+
+];
+
 
 function moveButton() {
 
-    const maxX = window.innerWidth - 150;
-    const maxY = window.innerHeight - 80;
+    noClicks++;
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+
+    /* Change text */
+
+    if (noClicks < funnyTexts.length) {
+
+        noButton.innerText =
+            funnyTexts[noClicks];
+
+    } else {
+
+        noButton.innerText =
+            "Nice try 😂";
+
+    }
+
+
+    /* Button dimensions */
+
+    const buttonWidth =
+        noButton.offsetWidth;
+
+    const buttonHeight =
+        noButton.offsetHeight;
+
+
+    /*
+       Keep the button completely
+       inside the browser window.
+    */
+
+    const padding = 15;
+
+
+    const maxX =
+        window.innerWidth -
+        buttonWidth -
+        padding;
+
+
+    const maxY =
+        window.innerHeight -
+        buttonHeight -
+        padding;
+
+
+    const x =
+        padding +
+        Math.random() *
+        Math.max(1, maxX - padding);
+
+
+    const y =
+        padding +
+        Math.random() *
+        Math.max(1, maxY - padding);
+
+
+    /* Make it fixed */
 
     noButton.style.position = "fixed";
-    noButton.style.left = x + "px";
-    noButton.style.top = y + "px";
+
+    noButton.style.left =
+        x + "px";
+
+    noButton.style.top =
+        y + "px";
+
+    noButton.style.zIndex =
+        "9999";
+
+
+    /*
+       After several attempts,
+       make it smaller.
+    */
+
+    if (noClicks >= 4) {
+
+        const scale =
+            Math.max(
+                0.55,
+                1 - (noClicks - 3) * 0.08
+            );
+
+        noButton.style.transform =
+            `scale(${scale})`;
+    }
+
 }
 
-noButton.addEventListener("mouseenter", moveButton);
 
-noButton.addEventListener("touchstart", moveButton);
+/* Desktop */
+
+noButton.addEventListener(
+    "mouseenter",
+    moveButton
+);
 
 
-/* -------------------------
-   OPEN CALENDAR
-------------------------- */
+/* Mobile */
 
-function openCalendar() {
+noButton.addEventListener(
+    "touchstart",
+    function(e) {
 
-    document.getElementById("invite").style.display = "none";
+        e.preventDefault();
 
-    document.getElementById("calendar").style.display = "block";
+        moveButton();
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+/* Mouse click fallback */
+
+noButton.addEventListener(
+    "click",
+    function(e) {
+
+        e.preventDefault();
+
+        moveButton();
+
+    }
+);
+
+
+/* =========================
+   SCREEN NAVIGATION
+========================= */
+
+function showScreen(id) {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+
+            screen.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+}
+
+
+/* =========================
+   START
+========================= */
+
+function startDate() {
+
+    /*
+       Reset button if someone
+       comes back to the beginning.
+    */
+
+    noButton.style.position = "relative";
+
+    noButton.style.left = "";
+
+    noButton.style.top = "";
+
+    noButton.style.transform = "";
+
+    noButton.innerText =
+        "Maybe later";
+
+
+    showScreen("dateScreen");
 
     renderCalendar();
 }
 
 
-/* -------------------------
+/* =========================
    CALENDAR
-------------------------- */
+========================= */
 
 function renderCalendar() {
 
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
+    const year =
+        currentDate.getFullYear();
+
+    const month =
+        currentDate.getMonth();
+
 
     const monthNames = [
+
         "January",
         "February",
         "March",
@@ -444,85 +1196,164 @@ function renderCalendar() {
         "October",
         "November",
         "December"
+
     ];
 
-    document.getElementById("monthName").innerText =
-        monthNames[month] + " " + year;
+
+    document
+        .getElementById("monthName")
+        .innerText =
+            monthNames[month] +
+            " " +
+            year;
+
 
     const daysContainer =
         document.getElementById("days");
 
+
     daysContainer.innerHTML = "";
 
+
     const firstDay =
-        new Date(year, month, 1).getDay();
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
 
     const daysInMonth =
-        new Date(year, month + 1, 0).getDate();
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
 
-    const today = new Date();
 
-    for (let i = 0; i < firstDay; i++) {
+    const today =
+        new Date();
 
-        const empty = document.createElement("div");
 
-        daysContainer.appendChild(empty);
+    /*
+       Empty spaces before
+       first day of month.
+    */
+
+    for (
+        let i = 0;
+        i < firstDay;
+        i++
+    ) {
+
+        const empty =
+            document.createElement("div");
+
+        daysContainer.appendChild(
+            empty
+        );
     }
 
-    for (let day = 1; day <= daysInMonth; day++) {
+
+    /*
+       Days
+    */
+
+    for (
+        let day = 1;
+        day <= daysInMonth;
+        day++
+    ) {
 
         const button =
             document.createElement("button");
 
-        button.innerText = day;
+
+        button.innerText =
+            day;
+
 
         const date =
-            new Date(year, month, day);
+            new Date(
+                year,
+                month,
+                day
+            );
 
-        if (date < new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate()
-        )) {
 
-            button.classList.add("disabled");
+        const todayOnly =
+            new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate()
+            );
+
+
+        /*
+           Disable past dates.
+        */
+
+        if (
+            date < todayOnly
+        ) {
+
+            button.classList.add(
+                "disabled"
+            );
 
             button.disabled = true;
 
-        } else {
-
-            button.onclick = function() {
-
-                document
-                    .querySelectorAll(".days button")
-                    .forEach(b =>
-                        b.classList.remove("selected")
-                    );
-
-                button.classList.add("selected");
-
-                selectedDate = date;
-
-                document.getElementById("times")
-                    .style.display = "block";
-
-                document.getElementById("confirmButton")
-                    .style.display = "none";
-
-                selectedTime = null;
-
-                document
-                    .querySelectorAll(".time-options button")
-                    .forEach(b =>
-                        b.classList.remove("selected")
-                    );
-            };
         }
 
-        daysContainer.appendChild(button);
+
+        else {
+
+            button.onclick =
+                function() {
+
+
+                    document
+                        .querySelectorAll(
+                            ".days button"
+                        )
+                        .forEach(b =>
+
+                            b.classList.remove(
+                                "selected"
+                            )
+                        );
+
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+
+                    selectedDate =
+                        date;
+
+
+                    document
+                        .getElementById(
+                            "dateNext"
+                        )
+                        .disabled = false;
+
+                };
+
+        }
+
+
+        daysContainer.appendChild(
+            button
+        );
+
     }
+
 }
 
+
+/* Previous month */
 
 function previousMonth() {
 
@@ -534,6 +1365,8 @@ function previousMonth() {
 }
 
 
+/* Next month */
+
 function nextMonth() {
 
     currentDate.setMonth(
@@ -544,110 +1377,250 @@ function nextMonth() {
 }
 
 
-/* -------------------------
+/* =========================
+   PLACE
+========================= */
+
+function goToPlace() {
+
+    if (!selectedDate) {
+
+        return;
+    }
+
+
+    showScreen(
+        "placeScreen"
+    );
+}
+
+
+function selectPlace(
+    element,
+    place
+) {
+
+    document
+        .querySelectorAll(".place")
+        .forEach(p =>
+
+            p.classList.remove(
+                "selected"
+            )
+        );
+
+
+    element.classList.add(
+        "selected"
+    );
+
+
+    selectedPlace =
+        place;
+
+
+    document
+        .getElementById(
+            "placeNext"
+        )
+        .disabled = false;
+}
+
+
+function goToTime() {
+
+    if (!selectedPlace) {
+
+        return;
+    }
+
+
+    showScreen(
+        "timeScreen"
+    );
+}
+
+
+/* =========================
    TIME
-------------------------- */
+========================= */
 
 function selectTime(button) {
 
     document
-        .querySelectorAll(".time-options button")
+        .querySelectorAll(
+            ".time-options button"
+        )
         .forEach(b =>
-            b.classList.remove("selected")
+
+            b.classList.remove(
+                "selected"
+            )
         );
 
-    button.classList.add("selected");
 
-    selectedTime = button.innerText;
+    button.classList.add(
+        "selected"
+    );
 
-    document.getElementById("confirmButton")
-        .style.display = "block";
+
+    selectedTime =
+        button.innerText;
+
+
+    document
+        .getElementById(
+            "confirmButton"
+        )
+        .disabled = false;
 }
 
 
-/* -------------------------
+/* =========================
    CONFIRM
-------------------------- */
+========================= */
 
 function confirmDate() {
 
-    if (!selectedDate || !selectedTime) {
+    if (
+        !selectedDate ||
+        !selectedPlace ||
+        !selectedTime
+    ) {
+
         return;
     }
 
+
     const options = {
+
         weekday: "long",
+
         year: "numeric",
+
         month: "long",
+
         day: "numeric"
+
     };
 
-    document.getElementById("finalDate").innerText =
+
+    document
+        .getElementById(
+            "finalDate"
+        )
+        .innerText =
+
         selectedDate.toLocaleDateString(
             "en-US",
             options
         );
 
-    document.getElementById("finalTime").innerText =
+
+    document
+        .getElementById(
+            "finalPlace"
+        )
+        .innerText =
+
+        selectedPlace;
+
+
+    document
+        .getElementById(
+            "finalTime"
+        )
+        .innerText =
+
         selectedTime;
 
-    document.getElementById("calendar")
-        .style.display = "none";
 
-    document.getElementById("success")
-        .style.display = "block";
+    showScreen(
+        "success"
+    );
+
 
     startConfetti();
 }
 
 
-/* -------------------------
-   CONFETTI
-------------------------- */
+/* =========================
+   CONFETTI 🎉
+========================= */
 
 const canvas =
-    document.getElementById("confetti");
+    document.getElementById(
+        "confetti"
+    );
 
-const ctx = canvas.getContext("2d");
+
+const ctx =
+    canvas.getContext("2d");
+
 
 let particles = [];
 
+
 function resizeCanvas() {
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
 }
 
+
 resizeCanvas();
+
 
 window.addEventListener(
     "resize",
     resizeCanvas
 );
 
+
 function startConfetti() {
 
     particles = [];
 
-    for (let i = 0; i < 150; i++) {
+
+    for (
+        let i = 0;
+        i < 150;
+        i++
+    ) {
 
         particles.push({
 
-            x: Math.random() * canvas.width,
+            x:
+                Math.random() *
+                canvas.width,
 
-            y: Math.random() * -canvas.height,
+            y:
+                Math.random() *
+                -canvas.height,
 
-            size: Math.random() * 8 + 3,
+            size:
+                Math.random() *
+                8 + 3,
 
-            speed: Math.random() * 4 + 2,
+            speed:
+                Math.random() *
+                4 + 2,
 
-            rotation: Math.random() * 360,
+            rotation:
+                Math.random() *
+                360,
 
             rotationSpeed:
-                Math.random() * 10 - 5
+                Math.random() *
+                10 - 5
 
         });
+
     }
+
 
     animateConfetti();
 }
@@ -662,49 +1635,87 @@ function animateConfetti() {
         canvas.height
     );
 
+
     particles.forEach(p => {
+
 
         p.y += p.speed;
 
-        p.rotation += p.rotationSpeed;
+
+        p.rotation +=
+            p.rotationSpeed;
+
 
         ctx.save();
 
-        ctx.translate(p.x, p.y);
+
+        ctx.translate(
+            p.x,
+            p.y
+        );
+
 
         ctx.rotate(
-            p.rotation * Math.PI / 180
+            p.rotation *
+            Math.PI /
+            180
         );
+
 
         ctx.fillStyle =
-            ["#ff416c","#ffcc00","#5c7cfa","#51cf66","#be4bdb"]
-            [Math.floor(Math.random() * 5)];
+            [
+                "#ff416c",
+                "#ffcc00",
+                "#5c7cfa",
+                "#51cf66",
+                "#be4bdb"
+            ][
+                Math.floor(
+                    Math.random() * 5
+                )
+            ];
+
 
         ctx.fillRect(
+
             -p.size / 2,
+
             -p.size / 2,
+
             p.size,
+
             p.size
+
         );
+
 
         ctx.restore();
 
     });
 
+
     particles =
         particles.filter(
-            p => p.y < canvas.height + 20
+            p =>
+                p.y <
+                canvas.height + 20
         );
 
-    if (particles.length > 0) {
+
+    if (
+        particles.length > 0
+    ) {
 
         requestAnimationFrame(
             animateConfetti
         );
+
     }
+
 }
 
 </script>
 
 </body>
 </html>
+```
